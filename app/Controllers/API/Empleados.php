@@ -11,7 +11,10 @@ class Empleados extends ResourceController
 {
     
     public function __construct(){
-        $this->model = $this->setModel(new EmpleadosModel());
+
+        helper('MultiConnection');
+        
+        $this->model = $this->setModel(new EmpleadosModel($db));
     }
 
 	public function index()
@@ -20,6 +23,7 @@ class Empleados extends ResourceController
 		$user = $userModel->find('1');
 		var_dump($user);
 		return view('welcome_message');*/
+        setdb('medic_desarrllo');
         $empleados = $this->model->findAll();
         return $this->respond($empleados);
 	}

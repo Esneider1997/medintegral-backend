@@ -19,11 +19,12 @@ class AuthFilter implements FilterInterface{
 		//$arr        = explode(' ', $authHeader);
 		//$token      = $arr[1];
 
-       
+       /* $key		= Services::getSecretKey();
+	   $token	= $request->getServer('HTTP_AUTORIZATION'); */
 
 		try
 		{
-			
+			/* JWT::decode($token, $key, ['HS256']); */
 		}
 		catch (\Exception $e)
 		{

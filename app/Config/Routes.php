@@ -28,7 +28,7 @@ $routes->setAutoRoute(true);
  * --------------------------------------------------------------------
  * Route Definitions
  * --------------------------------------------------------------------
- */
+*/
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
@@ -51,10 +51,10 @@ $routes->group('api', ['namespace' => 'App\Controllers\API', /* 'filter' => 'aut
 	$routes->put('empleados/update/(:num)', 'Empleados::update/$1');
 	$routes->delete('empleados/delete/(:num)', 'Empleados::delete/$1');
 
-	$routes->get('usuarios', 'Users::getUsuarios');
+	/* $routes->get('usuarios', 'Users::getUsuarios');
 	$routes->post('usuarios/create', 'Users::create');
 	$routes->get('usuarios/byEmpUsuario/(:num)', 'Users::getUsuariosEmpleados/$1');
-	$routes->post('usuarios/createuser','Users::crearUsuario');
+	$routes->post('usuarios/createuser','Users::crearUsuario'); */
 
 	// Roles
 	$routes->get('roles', 'Roles::index');

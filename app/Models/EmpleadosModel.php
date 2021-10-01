@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class EmpleadosModel extends Model
 {
 
-    protected $db;
+    //protected $db;
 
     protected $table      = 'conf_Empleados';
     protected $primaryKey = 'Id';

@@ -10,7 +10,8 @@ class Roles extends ResourceController
 
 	public function __construct()
 	{	
-		$model = $this->setModel(new RolModel());
+		helper('MultiConnection');
+		$model = $this->setModel(new RolModel($db));
 	}
 	/**
 	 * Return an array of resource objects, themselves in array format
@@ -19,6 +20,7 @@ class Roles extends ResourceController
 	 */
 	public function index()
 	{
+		setdb('medic_desarrollo');
 		$roles = $this->model->findAll();
 		return $this->respond($roles);
 	}

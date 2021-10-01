@@ -52,6 +52,7 @@ class Auth extends BaseController
             'exp' => (int)$time + 600, //tiempo de expiración
             'data' => [
                 'nombre' => $usuario['usuario']
+                
             ]
         ];
 

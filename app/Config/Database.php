@@ -30,12 +30,76 @@ class Database extends Config
 	 *
 	 * @var array
 	 */
+
 	public $default = [
 		'DSN'      => '',
-		'hostname' => '172.16.20.166',
+		'hostname' => '',
+		'username' => '',
+		'password' => '',
+		'database' => '',
+		'DBDriver' => 'sqlsrv',
+		'DBPrefix' => '',
+		'pConnect' => false,
+		//'DBDebug'  => (ENVIRONMENT !== 'production'),
+		'DBDebug'  => (ENVIRONMENT !== 'development'),
+		'charset'  => 'utf8',
+		'DBCollat' => 'utf8_general_ci',
+		'swapPre'  => '',
+		'encrypt'  => false,
+		'compress' => false,
+		'strictOn' => false,
+		'failover' => [],
+		'port'     => '1433',
+	];
+
+	public $medic = [
+		'DSN'      => '',
+		'hostname' => '172.16.220.166',
 		'username' => 'desarrollador',
 		'password' => 'desarrollo',
 		'database' => 'medic_desarrollo',
+		'DBDriver' => 'sqlsrv',
+		'DBPrefix' => '',
+		'pConnect' => false,
+		//'DBDebug'  => (ENVIRONMENT !== 'production'),
+		'DBDebug'  => (ENVIRONMENT !== 'development'),
+		'charset'  => 'utf8',
+		'DBCollat' => 'utf8_general_ci',
+		'swapPre'  => '',
+		'encrypt'  => false,
+		'compress' => false,
+		'strictOn' => false,
+		'failover' => [],
+		'port'     => '1433',
+	];
+
+	public $altamed = [
+		'DSN'      => '',
+		'hostname' => '172.16.220.166',
+		'username' => 'desarrollador',
+		'password' => 'desarrollo',
+		'database' => 'altamed_desarrollo',
+		'DBDriver' => 'sqlsrv',
+		'DBPrefix' => '',
+		'pConnect' => false,
+		//'DBDebug'  => (ENVIRONMENT !== 'production'),
+		'DBDebug'  => (ENVIRONMENT !== 'development'),
+		'charset'  => 'utf8',
+		'DBCollat' => 'utf8_general_ci',
+		'swapPre'  => '',
+		'encrypt'  => false,
+		'compress' => false,
+		'strictOn' => false,
+		'failover' => [],
+		'port'     => '1433',
+	];
+
+	public $cliErimita = [
+		'DSN'      => '',
+		'hostname' => '172.16.220.166',
+		'username' => 'desarrollador',
+		'password' => 'desarrollo',
+		'database' => 'clirimita_desarrollo',
 		'DBDriver' => 'sqlsrv',
 		'DBPrefix' => '',
 		'pConnect' => false,

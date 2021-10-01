@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class RolModel extends Model
 {
-	protected $DBGroup              = 'default';
+	
 	protected $table                = 'conf_rolEmpleado';
 	protected $primaryKey           = 'Id';
 	/* protected $useAutoIncrement     = true;
