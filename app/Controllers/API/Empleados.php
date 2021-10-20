@@ -1,31 +1,32 @@
-<?php
+<?php 
 
 namespace App\Controllers\API;
 
-
 use App\Models\EmpleadosModel;
 use CodeIgniter\RESTful\ResourceController;
-
+use Firebase\JWT\JWT;
+use App\Controllers\Auth;
 
 class Empleados extends ResourceController
 {
     
     public function __construct(){
-
         helper('MultiConnection');
-        
+        helper('HashPassword');
         $this->model = $this->setModel(new EmpleadosModel($db));
     }
 
 	public function index()
 	{
+        setdb('medic_desarrllo');
+        $empleados = $this->model->findAll();
+        return $this->respond($empleados);
+
 		/*$userModel = new UserModel($db);
 		$user = $userModel->find('1');
 		var_dump($user);
 		return view('welcome_message');*/
-        setdb('medic_desarrllo');
-        $empleados = $this->model->findAll();
-        return $this->respond($empleados);
+        
 	}
 
     public function Empleados()
@@ -111,6 +112,60 @@ class Empleados extends ResourceController
             return $this->failServerError('Ha ocurrido un un error en el servidor');
         }
     }
+
+    public function validarLogin(){
+
+                
+        $usuario = $this->request->getJSON();
+        $user = $usuario->usuario;
+        $pass = $usuario->contrasena;
+        $datosUsuario = $this->model->where('user', $user)->first();
+        
+        if($datosUsuario != null){
+            if($datosUsuario['estado_usuario']=="1"){
+                return "1";
+            }else{
+
+                if(verifyPassword($pass,$datosUsuario['password'])){
+                   
+                    //return $this->respond($jwt);
+                    //$token =  $this->respond($jwt);
+                    /*$datosSesion = [
+                        'id' => $datosUsuario['id_usuario'],
+                        'nombre' => $datosUsuario['nombre'],
+                        'tipo_usuario' => $datosUsuario['tipo_usuario'],
+                        'estado_usuario' => $datosUsuario['estado_usuario'],
+                        'login' => TRUE,
+                        //'token' => $token,
+                    ];*/
+                    
+                    //$session = session();
+                   //$session = $this->session->set($datosSesion); 
+                   $jwt = $this->generateJWT($datosUsuario);
+                   //return $this->respond($jwt);
+                  
+                  
+                   $datosUsuario['token'] = $jwt;
+                  
+                   return $this->respond($datosUsuario);
+                   // return redirect()->to(base_url().'/principal');
+                   // echo view('inicio/principal',$session );    
+                }else{
+                    //$data = "El password no coincide";
+                    return "2";
+                    //echo view('inicio/login',$data);
+                }
+            }   
+        }else{
+            //$data = "EL usuario no existe";
+            return "3";
+            //echo view('inicio/login',$data);
+        }
+
+  
+}
+
+
 
     /*
      public function conectar(){

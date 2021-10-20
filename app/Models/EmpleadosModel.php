@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use CodeIgniter\Database\MySQLi\Builder;
 use CodeIgniter\Model;
 
 class EmpleadosModel extends Model
@@ -23,21 +24,23 @@ class EmpleadosModel extends Model
         'segundo_nombre', 
         'apellido_paterno', 
         'apellido_materno', 
-        'idtipoDocumento', 
+        'id_tipo_documento', 
         'identificacion', 
         'fecha_expedicion', 
         'fecha_nacimiento', 
-        'CiudadNacimiento', 
+        'ciudad_nacimiento', 
         'direccion', 
         'email', 
         'id_sexo', 
-        'idEstadoCivil', 
-        'idCargo', 
-        'idCentroCosto', 
-        'ruta_foto', 
+        'id_estado_civil', 
+        'id_cargo', 
+        'id_centro_costo',
         'usuario', 
         'contrasena', 
-        'idRol'
+        'id_rol',
+        'nombre_img',
+        'ruta_img',
+        'estado'
     ];
 
     protected $useTimestamps = false;
@@ -56,4 +59,24 @@ class EmpleadosModel extends Model
     ];
     
     protected $skipValidation     = false;
+
+
+    //-- verificar validacion del usuario
+    /* public function validar_usuario()
+    {            
+        $builder = $this->db->table($this->table);
+        $builder = $this->select('*');
+        $builder = $this->from('usuario'); 
+        $builder = $this->where('contrasena');
+        $builder = $this->limit(1);
+        $builder = $this->get();   
+        
+        if($builder->num_rows() == 1){                 
+           return $builder->result();
+        }
+        else{
+            return false;
+        }
+    } */
+
 }

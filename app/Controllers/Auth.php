@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\EmpleadosModel;
 use App\Models\LoginModel;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Controller;
@@ -15,7 +16,8 @@ class Auth extends BaseController
     {
         helper('HashPassword');
     }
-	public function login()
+
+	/* public function login()
 	{
 		try {
             $user     = $this->request->getPost('usuario');
@@ -41,7 +43,61 @@ class Auth extends BaseController
         } catch (\Throwable $th) {
             return $this->failServerError('Ha ocurrido un un error en el servidor  '. $th);
         }
-	}
+	} */
+
+    public function validarLogin(){
+        
+        /* $username = $this->request->getPost('usuario');
+        $password = $this->request->getPost('password'); */
+
+        $usuario = $this->request->getJSON();
+        $user = $usuario->usuario;
+        $pass = $usuario->contrasena;
+        
+        $empleado = new EmpleadosModel();
+        $empleado = $this->model->where('usuario', $user)->first();
+
+        echo $empleado->username;
+
+        //var_dump($datosUsuario);
+        if( $empleado != null ){
+            if( $empleado['estado'] == "1" ){
+                //$data['error'] = "Usuario invalido";
+                return "1";
+            }else{
+
+                if(verifyPassword( $pass, $empleado['contrasena'] ) ){
+                   
+                    //return $this->respond($jwt);
+                    //$token =  $this->respond($jwt);
+                    /*$datosSesion = [
+                        'id' => $datosUsuario['id_usuario'],
+                        'nombre' => $datosUsuario['nombre'],
+                        'tipo_usuario' => $datosUsuario['tipo_usuario'],
+                        'estado_usuario' => $datosUsuario['estado_usuario'],
+                        'login' => TRUE,
+                        //'token' => $token,
+                    ];*/
+                    
+                    //$session = session();
+                   //$session = $this->session->set($datosSesion); 
+                   $jwt = $this->generarJWT($empleado);
+                   //return $this->respond($jwt);
+                  
+                  
+                   $datosUsuario['token'] = $jwt;
+                  
+                   return $this->respond($datosUsuario);
+                   // return redirect()->to(base_url().'/principal');  
+                }else{
+                    return "2";
+
+                }
+            }   
+        } else {
+            return "3";
+        }
+    }
 
     protected function generarJWT($usuario){
         $key = Services::getSecretKey();

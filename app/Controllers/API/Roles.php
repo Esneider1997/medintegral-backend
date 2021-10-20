@@ -78,6 +78,7 @@ class Roles extends ResourceController
 			$rol = $this->model->find($id);
 			if( $rol == null )
 				return $this->failNotFound('No se ha encontrado un rol con el id '.$id);
+
 			return $this->respond($rol);
 		}catch(\Exception $e){
 			return $this->failValidationErrors('Ha encontrado un error en el servidor '.$e);
@@ -91,7 +92,25 @@ class Roles extends ResourceController
 	 */
 	public function update($id = null)
 	{
-		//
+		try {
+			if( $id == null )
+				return $this->failValidationErrors('No se ha encontrado un id valido');
+
+			$rolVerificado = $this->model->find($id);
+			if( $rolVerificado == null )
+				return $this->failNotFound('No se ha encontrado un rol con el id '.$id);
+			
+			$rol = $this->request->getJSON();
+
+			if ($this->model->update($id, $rol)):
+				$rol->id = $id;
+				return $this->respondUpdated($rol);
+			else:
+				return $this->failServerError($this->model->validation->listErrors());
+			endif;
+		} catch (\Exception $e) {
+			return $this->failServerError('Ha ocurrido un error en el servidor '.$e);
+		}
 	}
 
 	/**
@@ -101,6 +120,22 @@ class Roles extends ResourceController
 	 */
 	public function delete($id = null)
 	{
-		//
+		try {
+			
+			if ($id == null )
+				return $this->failValidationErrors('No se ha encontrado un id valido');
+			
+			$rol = $this->model->find($id);
+			if ($rol == null) 
+				return $this->failNotFound('No se ha encontrado un rol con el id '.$id);
+			
+			if ( $this->model->delete($id) ) {
+				return $this->respondDeleted($rol);
+			}else{
+				return $this->failServerError('No se pudo eliminar registro de la base de datos');
+			}
+		} catch (\Exception $e) {
+			return $this->failServerError('ha ocurrido un error en el servidor'.$e);
+		}
 	}
 }
